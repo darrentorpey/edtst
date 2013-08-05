@@ -1,0 +1,9 @@
+body {
+  width: auto;
+}
+
+#todoapp.todo_list {
+  margin-left: auto;
+  margin-right: auto;
+  width: 550px;
+}

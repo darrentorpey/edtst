@@ -1,18 +1,18 @@
 /*global Backbone, jQuery, _, ENTER_KEY */
 var app = app || {};
 
-(function ($) {
+(function ($, Helpers) {
 	'use strict';
 
 	// The Application
 	// ---------------
 
 	// Our overall **AppView** is the top-level piece of UI.
-	app.AppView = Backbone.View.extend({
+	app.ToDoGameView = Backbone.View.extend({
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
-		el: '#todoapp',
+		el: '.todo_list',
 
 		// Our template for the line of statistics at the bottom of the app.
 		statsTemplate: _.template($('#stats-template').html()),
@@ -39,12 +39,13 @@ var app = app || {};
 			this.listenTo(app.todos, 'filter', this.filterAll);
 			this.listenTo(app.todos, 'all', this.render);
 
-			app.todos.fetch();
+			app.todos.fetch({ reset: true });
 		},
 
 		// Re-rendering the App just means refreshing the statistics -- the rest
 		// of the app doesn't change.
-		render: function () {
+		render: function (eventName) {
+			console.log('this.$el, eventName', this.$el, eventName);
 			var completed = app.todos.completed().length;
 			var remaining = app.todos.remaining().length;
 
@@ -72,14 +73,16 @@ var app = app || {};
 		// Add a single todo item to the list by creating a view for it, and
 		// appending its element to the `<ul>`.
 		addOne: function (todo) {
-			var view = new app.TodoView({ model: todo });
-			$('#todo-list').append(view.render().el);
+			this.getList().append(Helpers.renderModel(todo, app.TodoView));
+		},
+
+		getList: function() {
+			return this.$el.find('#todo-list');
 		},
 
 		// Add all items in the **Todos** collection at once.
 		addAll: function () {
-			this.$('#todo-list').html('');
-			app.todos.each(this.addOne, this);
+			this.getList().html(Helpers.renderCollection(app.todos, app.TodoView));
 		},
 
 		filterOne: function (todo) {
@@ -126,4 +129,4 @@ var app = app || {};
 			});
 		}
 	});
-})(jQuery);
+})(window.jQuery, window.Helpers);
