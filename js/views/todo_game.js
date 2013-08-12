@@ -1,4 +1,4 @@
-/*global Backbone, jQuery, _, ENTER_KEY */
+/*global Backbone, jQuery, _ */
 var app = app || {};
 
 (function ($, Helpers) {
@@ -45,7 +45,7 @@ var app = app || {};
 		// Re-rendering the App just means refreshing the statistics -- the rest
 		// of the app doesn't change.
 		render: function (eventName) {
-			console.log('this.$el, eventName', this.$el, eventName);
+			// console.log('this.$el, eventName', this.$el, eventName);
 			var completed = app.todos.completed().length;
 			var remaining = app.todos.remaining().length;
 
@@ -105,7 +105,7 @@ var app = app || {};
 		// If you hit return in the main input field, create new **Todo** model,
 		// persisting it to *localStorage*.
 		createOnEnter: function (e) {
-			if (e.which !== ENTER_KEY || !this.$input.val().trim()) {
+			if (e.which !== EDTST.Game.ENTER_KEY || !this.$input.val().trim()) {
 				return;
 			}
 

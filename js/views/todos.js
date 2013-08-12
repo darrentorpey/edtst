@@ -1,4 +1,4 @@
-/*global Backbone, jQuery, _, ENTER_KEY */
+/*global Backbone, jQuery, _ */
 var app = app || {};
 
 (function ($) {
@@ -80,7 +80,7 @@ var app = app || {};
 
 		// If you hit `enter`, we're through editing the item.
 		updateOnEnter: function (e) {
-			if (e.which === ENTER_KEY) {
+			if (e.which === EDTST.Game.ENTER_KEY) {
 				this.close();
 			}
 		},
